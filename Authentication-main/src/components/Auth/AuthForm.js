@@ -14,7 +14,28 @@ const AuthForm = () => {
   const enteredPassword=passwordInputRef.current.value
   if(isLogin)
   {
-   
+   const response=await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC2ZbjyytCTRQbt6vZbsWoue1BxW7OXY-g',{
+    method:'POST',
+    body:JSON.stringify({
+      email:enteredEmail,
+      password:enteredPassword,
+      returnSecureToken:true
+    }),
+      headers:{
+        'Content-Type':'application/json'
+      }
+   })
+   const data= await response.json();
+   console.log(data)
+   let errorMessage='Authentication failed!'
+   if(data && data.error && data.error.message)
+   {
+    
+    errorMessage=data.error.message
+    setError(errorMessage)
+   }
+
+
   }
   else{
    setIsLoading(true)
