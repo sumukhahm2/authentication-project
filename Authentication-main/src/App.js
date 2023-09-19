@@ -1,12 +1,15 @@
 import { Switch, Route } from 'react-router-dom';
 
+import AuthContextProvider from './components/store/AuthContextProvider';
 import Layout from './components/Layout/Layout';
 import UserProfile from './components/Profile/UserProfile';
 import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage';
 
 function App() {
+ 
   return (
+    <AuthContextProvider>
     <Layout>
       <Switch>
         <Route path='/' exact>
@@ -20,6 +23,7 @@ function App() {
         </Route>
       </Switch>
     </Layout>
+    </AuthContextProvider>
   );
 }
 
