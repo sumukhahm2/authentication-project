@@ -2,11 +2,12 @@ import { useState, useRef,useContext } from 'react';
 import Context from '../store/Context';
 import classes from './AuthForm.module.css';
 
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  
+  const histry=useHistory()
   const ctx=useContext(Context)
   const emailInputRef=useRef()
   const passwordInputRef=useRef()
@@ -29,7 +30,7 @@ const AuthForm = () => {
       }
    })
    const data= await response.json();
-   
+   histry.replace('/')
    let errorMessage='Authentication failed!'
    if(data && data.error && data.error.message)
    {
@@ -39,6 +40,7 @@ const AuthForm = () => {
    }
    else{
     ctx.setToken(data.idToken)
+   
    }
    setIsLoading(false)
    

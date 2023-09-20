@@ -1,18 +1,25 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 
 import Context from './Context'
 
 const AuthContextProvider=(props)=>{
-  const [updatedToken,setIsToken]=useState('')
+  const [updatedToken,setIsToken]=useState(null)
+  const userIsLoggedIn=!!updatedToken
+  useEffect(()=>{
+    setIsToken(localStorage.getItem('token'))
+  },[])
   const storeToken=(item)=>{
+    localStorage.setItem('token',item)
     setIsToken(item)
     
   }
   const deleteToken=()=>{
-    setIsToken('')
+    setIsToken(null)
+    localStorage.removeItem('token')
   }
   const contextValue={
     token:updatedToken,
+    isLoggedIn:userIsLoggedIn,
     setToken:storeToken,
     cleanToken:deleteToken
   }

@@ -1,17 +1,16 @@
-import { Link } from 'react-router-dom';
-import React,{useState,useEffect,useContext} from'react'
+import { Link,useHistory } from 'react-router-dom';
+import React,{useContext} from'react'
 import classes from './MainNavigation.module.css';
 import Context from '../store/Context';
 
 const MainNavigation = () => {
-  const [loggedIn,setLoggedIn]=useState(false)
+ const histry=useHistory()
   const ctx=useContext(Context)
-  useEffect(()=>{
-      if(ctx.token!=='')
-      { 
-        setLoggedIn(true)
-      }
-  },[ctx.token])
+  const loggedIn=ctx.isLoggedIn
+  const logoutHandler=()=>{
+    ctx.cleanToken()
+    histry.replace('/auth')
+  }
   return (
     <header className={classes.header}>
       <Link to='/'>
@@ -26,7 +25,7 @@ const MainNavigation = () => {
             {loggedIn && <Link to='/profile'>Profile</Link>}
           </li>
           <li>
-            {loggedIn && <button>Logout</button>}
+            {loggedIn && <button onClick={logoutHandler}>Logout</button>}
           </li>
         </ul>
       </nav>
