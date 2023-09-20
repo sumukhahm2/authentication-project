@@ -8,6 +8,9 @@ const AuthContextProvider=(props)=>{
   useEffect(()=>{
     setIsToken(localStorage.getItem('token'))
   },[])
+  setTimeout(()=>{
+     deleteToken()
+  },300000)
   const storeToken=(item)=>{
     localStorage.setItem('token',item)
     setIsToken(item)
